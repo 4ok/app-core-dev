@@ -152,7 +152,6 @@ bower_install() {
     if [[ -f bower.json ]]; then
         printTitle 'Installing bower modules'
 
-        "$BOWER" cache clean "${BOWER_COMMON_ARGS[@]}"
         "$BOWER" install --force-latest "${BOWER_COMMON_ARGS[@]}"
     fi
 }
