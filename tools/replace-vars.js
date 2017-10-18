@@ -1,18 +1,18 @@
 const path = require('path');
 const fs = require('fs');
 
-const argv = process.argv;
+const { argv } = process;
 const sourceFile = argv[2];
 const varsFile = path.resolve(argv[3]);
 
-// eslint-disable-next-line import/no-dynamic-require
+// eslint-disable-next-line global-require, import/no-dynamic-require
 const vars = require(varsFile);
 const fileEncoding = 'utf8';
 let content = fs.readFileSync(sourceFile, fileEncoding);
 
 Object
     .keys(vars)
-    .forEach(key => {
+    .forEach((key) => {
         const regExp = new RegExp('<' + key + '>', 'g');
 
         content = content.replace(regExp, vars[key]);
