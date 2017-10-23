@@ -132,7 +132,7 @@ stopAndStart() {
 }
 
 isAppStarted() {
-    "$PROCESS_MANAGER" id "$PROJECT_NAME" | grep -E '[0-9]+' > /dev/null
+    "$PROCESS_MANAGER" id "$PROJECT_NAME" | tail -1 | grep -E '[0-9]+' > /dev/null
 }
 
 #
