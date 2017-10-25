@@ -85,7 +85,7 @@ stylus() {
 js() {
     printTitle 'Linting javascript files'
 
-    "$ESLINT" '.'
+    "$ESLINT" --fix '.'
 }
 
 ########################################################
