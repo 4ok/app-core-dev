@@ -1,9 +1,9 @@
 #
 #    Installation:
 #
-#    		install          	Install npm and bower modules
-#    		uninstall        	Uninstall npm and bower modules
-#           prune           	Prune npm and bower modules
+#    		modules			    Install npm and bower modules
+#    		modules.uninstall   Uninstall npm and bower modules
+#           modules.prune       Prune npm and bower modules
 #
 #    		npm.install   	    Install npm modules
 #    		npm.uninstall    	Uninstall npm modules
