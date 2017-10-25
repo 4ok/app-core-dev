@@ -129,6 +129,7 @@ npm_uninstall() {
         printTitle 'Removing npm modules'
 
         rm -rf "$NODE_MODULES_DIR"
+        rm -rf "package-lock.json"
     fi
 }
 
