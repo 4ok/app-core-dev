@@ -38,14 +38,8 @@ if [[ -z $NODE_ENV ]]; then
     NODE_ENV='development'
 fi
 
-# Node directories
-NODE_BIN_DIR=(
-    '/usr/bin'
-    '/usr/local/bin'
-)
-
 # Node
-NODE=$(find "${NODE_BIN_DIR[@]}" -name 'node' \( -type f -o -type l \))
+NODE='node'
 
 # Process manager
 PROCESS_MANAGER='pm2'
@@ -79,6 +73,13 @@ printInfoBeforeStart() {
     echo "Nodejs version:  $("$NODE" --version)"
 }
 
+#
+# Check if the application is running
+#
+isAppRunning() {
+    "$PROCESS_MANAGER" id "$PROJECT_NAME" | tail -1 | grep -E '[0-9]+' > /dev/null
+}
+
 ########################################################
 ###                     Actions                      ###
 ########################################################
@@ -96,7 +97,7 @@ help() {
 start() {
     printTitle 'Running the application'
 
-    if isAppStarted; then
+    if isAppRunning; then
         echo '[warn] Application already started'
     else
         printInfoBeforeStart
@@ -114,7 +115,7 @@ start() {
 restart() {
     printTitle 'Restarting the application'
 
-    if isAppStarted; then
+    if isAppRunning; then
         printInfoBeforeStart
 
         "$PROCESS_MANAGER" restart "$PROJECT_NAME" --update-env
@@ -131,16 +132,12 @@ stopAndStart() {
     start
 }
 
-isAppStarted() {
-    "$PROCESS_MANAGER" id "$PROJECT_NAME" | tail -1 | grep -E '[0-9]+' > /dev/null
-}
-
 #
 # Start or restart the application
 #
 startOrRestart() {
 
-    if isAppStarted; then
+    if isAppRunning; then
         restart
     else
         start
@@ -153,7 +150,7 @@ startOrRestart() {
 stop() {
     printTitle 'Stopping the application'
 
-    if isAppStarted; then
+    if isAppRunning; then
         "$PROCESS_MANAGER" delete "$PROJECT_NAME"
     else
         echo '[warn] Application already stopped'
