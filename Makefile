@@ -46,17 +46,17 @@ DEBUG_TOOL := $(TOOLS_DIR)/debug
 ###                Installation rules                ###
 ########################################################
 
-# Install npm and bower modules
+# Install bower and npm modules
 .PHONY: modules
-modules: npm.install bower.install
+modules: bower.install npm.install
 
-# Remove npm and bower modules
+# Remove bower and npm modules
 .PHONY: modules.remove
-modules.remove: npm.remove bower.remove
+modules.remove: bower.remove npm.remove
 
-# Prune npm and bower modules
+# Prune bower and npm modules
 .PHONY: modules.prune
-modules.prune: npm.prune bower.prune
+modules.prune: bower.prune npm.prune
 	$(MODULE_TOOL) prune
 
 ##### Npm #####
