@@ -89,7 +89,10 @@ help() {
     echo "$HELP"
 }
 
-release() {
+#
+# Deploy a build
+#
+build() {
     local buildName='build'
     local buildArchive="$buildName.tgz"
     local remoteBuildName="$BUILD_GENERATION.$BUILD_NUMBER"
@@ -142,7 +145,7 @@ REMOTE
 ########################################################
 
 case "$1" in
-    release)
+    build)
         "$1"
     ;;
     *)
