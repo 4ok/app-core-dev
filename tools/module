@@ -9,7 +9,7 @@ Module.
 
 Usage:
 
-    module [module_type] action [dir]
+    module module_type action [dir]
     module action
 
 Parameters:
@@ -25,9 +25,9 @@ Parameters:
 
         Modules action.
 
-        - install          Install modules.
-        - uninstall        Uninstall modules.
-        - prune            Prune modules.
+        - install   Install modules.
+        - remove    Remove modules.
+        - prune     Prune modules.
 
     * dir
 
@@ -80,32 +80,6 @@ help() {
     echo "$HELP"
 }
 
-##### Common #####
-
-#
-# Install npm, bower modules
-#
-install() {
-    npm_install
-    bower_install
-}
-
-#
-# Uninstall npm, bower modules
-#
-uninstall() {
-    npm_uninstall
-    bower_uninstall
-}
-
-#
-# Prune npm, bower modules
-#
-prune() {
-    npm_prune
-    bower_prune
-}
-
 ##### Npm #####
 
 #
@@ -123,7 +97,7 @@ npm_install() {
 #
 # Remove npm modules
 #
-npm_uninstall() {
+npm_remove() {
 
     if [[ -f package.json ]]; then
         printTitle 'Removing npm modules'
@@ -157,9 +131,9 @@ bower_install() {
 }
 
 #
-# Delete bower modules
+# Remove bower modules
 #
-bower_uninstall() {
+bower_removel() {
 
     if [[ -f bower.json ]]; then
         printTitle 'Removing bower modules'
@@ -185,19 +159,9 @@ bower_prune() {
 ########################################################
 
 case "$1" in
-    install|uninstall|prune)
-        funcName="$1"
-        dir="$2"
-
-        if [[ -n $dir ]]; then
-            cd "$dir" && "$funcName"
-        else
-            "$funcName"
-        fi
-    ;;
     npm|bower)
 
-        if [[ $2 =~ ^(install|uninstall|prune)$ ]]; then
+        if [[ $2 =~ ^(install|remove|prune)$ ]]; then
             funcName="$1_$2"
             dir="$3"
 

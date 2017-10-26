@@ -48,17 +48,15 @@ DEBUG_TOOL := $(TOOLS_DIR)/debug
 
 # Install npm and bower modules
 .PHONY: modules
-modules:
-	$(MODULE_TOOL) install
+modules: npm.install bower.install
 
-# Uninstall npm and bower modules
+# Remove npm and bower modules
 .PHONY: modules.remove
-modules.remove:
-	$(MODULE_TOOL) uninstall
+modules.remove: npm.remove bower.remove
 
 # Prune npm and bower modules
 .PHONY: modules.prune
-modules.prune:
+modules.prune: npm.prune bower.prune
 	$(MODULE_TOOL) prune
 
 ##### Npm #####
@@ -68,10 +66,10 @@ modules.prune:
 npm.install:
 	$(MODULE_TOOL) npm install
 
-# Uninstall npm modules
-.PHONY: npm.uninstall
-npm.uninstall:
-	$(MODULE_TOOL) npm uninstall
+# Remove npm modules
+.PHONY: npm.remove
+npm.remove:
+	$(MODULE_TOOL) npm remove
 
 # Prune npm modules
 .PHONY: npm.prune
@@ -85,10 +83,10 @@ npm.prune:
 bower.install:
 	$(MODULE_TOOL) bower install
 
-# Uninstall bower modules
-.PHONY: bower.uninstall
-bower.uninstall:
-	$(MODULE_TOOL) bower uninstall
+# Remove bower modules
+.PHONY: bower.remove
+bower.remove:
+	$(MODULE_TOOL) bower remove
 
 # Prune bower modules
 .PHONY: bower.prune
