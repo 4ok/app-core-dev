@@ -25,12 +25,6 @@
 # 		   process       		Show the application process
 #    	   logs          		Show the application logs
 #
-#    Lint:
-#
-# 		   lint       			Lint all files
-# 		   lint.stylus			Lint stylus files
-# 		   lint.js       		Lint javascript files
-#
 
 ########################################################
 ###                     Variables                    ###
@@ -47,9 +41,6 @@ MODULE_TOOL := $(TOOLS_DIR)/module
 
 # Debug tool
 DEBUG_TOOL := $(TOOLS_DIR)/debug
-
-# Lint tool
-LINT_TOOL := $(TOOLS_DIR)/lint
 
 ########################################################
 ###                Installation rules                ###
@@ -141,23 +132,3 @@ process:
 .PHONY: logs
 logs:
 	$(DEBUG_TOOL) logs
-
-
-########################################################
-###                    Lint rules                    ###
-########################################################
-
-# Lint all files
-.PHONY: lint
-lint:
-	$(LINT_TOOL) all
-
-# Lint stylus files
-.PHONY: lint.stylus
-lint.stylus:
-	$(LINT_TOOL) stylus
-
-# Lint javascript files
-.PHONY: lint.js
-lint.js:
-	$(LINT_TOOL) js
