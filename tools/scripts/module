@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+
+########################################################
+###                        Help                      ###
+########################################################
+
+HELP='
+Module.
+
+Usage:
+
+    module module_type action [dir]
+    module action
+
+Parameters:
+
+    * module_type
+
+        Modules type.
+
+        - npm     npm modules.
+        - bower   bower modules.
+
+    * action
+
+        Modules action.
+
+        - install   Install modules.
+        - remove    Remove modules.
+        - prune     Prune modules.
+
+    * dir
+
+        Directory for action.
+'
+
+########################################################
+###                     Variables                    ###
+########################################################
+
+# Node environment
+if [[ -z $NODE_ENV ]]; then
+    NODE_ENV='development'
+fi
+
+# Npm
+NPM=npm
+
+# Node modules directory
+NODE_MODULES_DIR='node_modules'
+
+# Bower bin
+BOWER="$NODE_MODULES_DIR/.bin/bower"
+
+########################################################
+###                      Helpers                     ###
+########################################################
+
+#
+# Print a title of action
+#
+# @1 {string} Title
+#
+printTitle() {
+    echo "===> $1"
+}
+
+########################################################
+###                     Actions                      ###
+########################################################
+
+#
+# Help
+#
+help() {
+    echo "$HELP"
+}
+
+##### Npm #####
+
+#
+# Install npm modules
+#
+npm_install() {
+
+    if [[ -f package.json ]]; then
+        printTitle "Installing npm modules (env: $NODE_ENV)"
+
+        "$NPM" install $@
+    fi
+}
+
+#
+# Remove npm modules
+#
+npm_remove() {
+
+    if [[ -f package.json ]]; then
+        printTitle 'Removing npm modules'
+
+        rm -rf "$NODE_MODULES_DIR"
+    fi
+}
+
+#
+# Prune npm modules
+#
+npm_prune() {
+
+    if [[ -f package.json ]]; then
+        printTitle 'Pruning npm modules'
+
+        "$NPM" prune $@
+    fi
+}
+
+##### Bower #####
+
+# Install bower modules
+bower_install() {
+
+    if [[ -f bower.json ]]; then
+        printTitle 'Installing bower modules'
+
+        "$BOWER" install $@
+    fi
+}
+
+#
+# Remove bower modules
+#
+bower_remove() {
+
+    if [[ -f bower.json ]]; then
+        printTitle 'Removing bower modules'
+
+        rm -rf 'bower_modules'
+    fi
+}
+
+#
+# Prune bower modules
+#
+bower_prune() {
+
+    if [[ -f bower.json ]]; then
+        printTitle 'Pruning bower modules'
+
+        "$BOWER" prune $@
+    fi
+}
+
+########################################################
+###                    Call action                   ###
+########################################################
+
+case "$1" in
+    npm|bower)
+
+        if [[ $2 =~ ^(install|remove|prune)$ ]]; then
+            funcName="$1_$2"
+            params=$(echo "$@" | cut -d ' ' -f 3-)
+
+            "$funcName" $params
+        else
+            help
+        fi
+    ;;
+    *)
+        help
+    ;;
+esac

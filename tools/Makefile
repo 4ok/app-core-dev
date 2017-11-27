@@ -1,8 +1,8 @@
 #
-#    Installation:
+#    Modules:
 #
 #    		modules			    Install npm and bower modules
-#    		modules.uninstall   Uninstall npm and bower modules
+#    		modules.remove		Uninstall npm and bower modules
 #           modules.prune       Prune npm and bower modules
 #
 #    		npm.install   	    Install npm modules
@@ -15,22 +15,25 @@
 #
 #    Debug:
 #
-# 		   process       		Show the application process
-#    	   logs          		Show the application logs
+# 		   process	Show the application process
+#    	   logs		Show the application logs
 #
 
 ########################################################
 ###                     Variables                    ###
 ########################################################
 
-# Tools directory
-TOOLS_DIR := @ . node_modules/app-core-dev/tools
+# Scripts directory
+SCRIPTS_DIR := node_modules/app-core-dev/tools/scripts
 
-# Module tool
-MODULE_TOOL := $(TOOLS_DIR)/module
+# Shared scripts directory
+SCRIPTS_DIR := $(SCRIPTS_DIR)/shared
 
-# Debug tool
-DEBUG_TOOL := $(TOOLS_DIR)/debug
+# Module script
+SCRIPT_MODULE := @ . $(SCRIPTS_DIR)/module
+
+# Debug script
+SCRIPT_DEBUG := @ . $(SCRIPTS_DIR)/debug
 
 ########################################################
 ###                Installation rules                ###
@@ -47,41 +50,41 @@ modules.remove: bower.remove npm.remove
 # Prune bower and npm modules
 .PHONY: modules.prune
 modules.prune: bower.prune npm.prune
-	$(MODULE_TOOL) prune
+	$(SCRIPT_MODULE) prune
 
 ##### Npm #####
 
 # Install npm modules
 .PHONY: npm.install
 npm.install:
-	$(MODULE_TOOL) npm install
+	$(SCRIPT_MODULE) npm install
 
 # Remove npm modules
 .PHONY: npm.remove
 npm.remove:
-	$(MODULE_TOOL) npm remove
+	$(SCRIPT_MODULE) npm remove
 
 # Prune npm modules
 .PHONY: npm.prune
 npm.prune:
-	$(MODULE_TOOL) npm prune
+	$(SCRIPT_MODULE) npm prune
 
 ##### Bower #####
 
 # Install bower modules
 .PHONY: bower.install
 bower.install:
-	$(MODULE_TOOL) bower install
+	$(SCRIPT_MODULE) bower install
 
 # Remove bower modules
 .PHONY: bower.remove
 bower.remove:
-	$(MODULE_TOOL) bower remove
+	$(SCRIPT_MODULE) bower remove
 
 # Prune bower modules
 .PHONY: bower.prune
 bower.prune:
-	$(MODULE_TOOL) bower prune
+	$(SCRIPT_MODULE) bower prune
 
 ########################################################
 ###                    Debug rules                   ###
@@ -90,9 +93,9 @@ bower.prune:
 # Show the application process
 .PHONY: process
 process:
-	$(DEBUG_TOOL) process
+	$(SCRIPT_DEBUG) process
 
 # Show the application logs
 .PHONY: logs
 logs:
-	$(DEBUG_TOOL) logs
+	$(SCRIPT_DEBUG) logs
