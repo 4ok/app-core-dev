@@ -26,9 +26,6 @@
 # Scripts directory
 SCRIPTS_DIR := node_modules/app-core-dev/tools/scripts
 
-# Shared scripts directory
-SCRIPTS_DIR := $(SCRIPTS_DIR)/shared
-
 # Module script
 SCRIPT_MODULE := @ . $(SCRIPTS_DIR)/module
 
